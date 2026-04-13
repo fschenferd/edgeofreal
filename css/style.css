@@ -1,0 +1,594 @@
+/* =========================================================
+   RESET
+========================================================= */
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+:root {
+  --bg:          #0b0c10;
+  --ink:         rgba(245,245,245,0.92);
+  --muted:       rgba(245,245,245,0.62);
+  --faint:       rgba(245,245,245,0.38);
+  --line:        rgba(245,245,245,0.14);
+  --glass:       rgba(255,255,255,0.06);
+  --glass-strong:rgba(255,255,255,0.10);
+
+  /* Soft-focus blur values — keratoconus aesthetic */
+  --blur-bg:     blur(18px);
+  --blur-mid:    blur(10px);
+  --blur-subtle: blur(3px);
+}
+
+/* =========================================================
+   BASE
+========================================================= */
+
+body {
+  background:
+    radial-gradient(1200px 800px at 70% 10%, rgba(255,255,255,0.04), transparent 55%),
+    radial-gradient(900px 700px at 10% 90%, rgba(255,255,255,0.03), transparent 60%),
+    var(--bg);
+  color: var(--ink);
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.05rem;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-y: auto;
+}
+
+body.locked {
+  overflow: hidden;
+}
+
+/* =========================================================
+   REDUCED MOTION
+   Removes blur animations, transitions, parallax for users
+   who prefer it — but keeps static blur for the aesthetic.
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+
+  .card-media img {
+    transform: none !important;
+  }
+}
+
+/* =========================================================
+   FOCUS STYLES (keyboard navigation)
+========================================================= */
+
+:focus-visible {
+  outline: 2px solid rgba(245,245,245,0.7);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* =========================================================
+   HEADER / NAV
+========================================================= */
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 18px 6vw;
+  z-index: 20;
+  backdrop-filter: var(--blur-mid);
+  -webkit-backdrop-filter: var(--blur-mid);
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.55),
+    rgba(0,0,0,0)
+  );
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+header nav {
+  display: flex;
+  gap: 22px;
+  align-items: center;
+}
+
+header nav button {
+  background: none;
+  border: none;
+  padding: 6px 2px;
+  cursor: pointer;
+  color: var(--muted);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+header nav button:hover,
+header nav button:focus-visible {
+  color: var(--ink);
+}
+
+/* =========================================================
+   SPLASH
+========================================================= */
+
+#splash {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: grid;
+  place-items: center;
+
+  /* Soft-focus background — the world seen through keratoconus:
+     sharp in the centre of attention, hazy at the periphery */
+  background:
+    radial-gradient(900px 700px at 50% 35%, rgba(255,255,255,0.06), transparent 60%),
+    #07070a;
+}
+
+/* Outer haze layer — blurs whatever is behind the splash */
+#splash::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  backdrop-filter: var(--blur-bg);
+  -webkit-backdrop-filter: var(--blur-bg);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.splash-card {
+  position: relative;
+  z-index: 1;
+  width: min(680px, 88vw);
+  padding: 34px 28px;
+  border-radius: 22px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.16);
+
+  /* Card itself stays sharp — the focal point */
+  box-shadow:
+    0 0 60px 20px rgba(0,0,0,0.45),
+    0 0 120px 60px rgba(0,0,0,0.2);
+
+  text-align: center;
+}
+
+.splash-card h1 {
+  font-family: "Cinzel", serif;
+  font-weight: 500;
+  font-size: clamp(1.3rem, 3.5vw, 2.1rem);
+  letter-spacing: 0.34em;
+}
+
+#tagline {
+  margin-top: 14px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+}
+
+#enter {
+  margin-top: 22px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.22);
+  color: var(--ink);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+#enter:hover,
+#enter:focus-visible {
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.32);
+}
+
+/* =========================================================
+   WORK PLANE (HORIZONTAL)
+========================================================= */
+
+.work-strip {
+  display: flex;
+  gap: 5vw;
+  padding: 120px 6vw 80px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 6vw;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.work-strip::-webkit-scrollbar {
+  display: none;
+}
+
+.project {
+  flex: 0 0 auto;
+  scroll-snap-align: center;
+}
+
+/* =========================================================
+   PROJECT CARD
+   Changed from <a> to <button> — fully keyboard + touch
+   accessible without needing href hacks.
+========================================================= */
+
+.card {
+  width: min(78vw, 980px);
+  height: min(64vh, 620px);
+  display: grid;
+  grid-template-rows: 1fr auto;
+  border-radius: 22px;
+  border: 1px solid rgba(255,255,255,0.16);
+  background: rgba(255,255,255,0.05);
+  overflow: hidden;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+
+  /* Reset button defaults */
+  -webkit-appearance: none;
+  appearance: none;
+  padding: 0;
+  font: inherit;
+
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+
+  transition:
+    border-color 220ms ease,
+    background 220ms ease,
+    transform 220ms ease;
+}
+
+.card:hover {
+  border-color: rgba(255,255,255,0.26);
+  background: rgba(255,255,255,0.07);
+  transform: translateY(-2px);
+}
+
+.card:active {
+  transform: translateY(0px);
+  background: rgba(255,255,255,0.09);
+}
+
+.card-media {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.03);
+  will-change: transform;
+  /* Subtle soft-focus on card images: they're windows into blurred worlds */
+  filter: blur(0px);
+  transition: filter 400ms ease, transform 220ms ease;
+}
+
+/* On hover, cards come into slightly sharper focus — like leaning in */
+.card:hover .card-media img {
+  filter: blur(0px);
+  transform: scale(1.05);
+}
+
+.card-meta {
+  padding: 16px 18px 18px;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.55),
+    rgba(0,0,0,0)
+  );
+}
+
+.card-title {
+  font-family: "Cinzel", serif;
+  font-size: clamp(1.05rem, 2.2vw, 1.55rem);
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+}
+
+.card-kicker {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.70rem;
+  letter-spacing: 0.22em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+/* =========================================================
+   VIEWER (MODAL)
+========================================================= */
+
+#viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  /* Accessible: trap focus inside when open */
+}
+
+#viewer-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(7,7,10,0.92);
+  backdrop-filter: var(--blur-mid);
+  -webkit-backdrop-filter: var(--blur-mid);
+  cursor: pointer; /* hint: clicking backdrop closes */
+}
+
+#viewer-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
+
+  /* Prevent scroll/zoom gestures stealing swipe events on iOS */
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+#viewer-content iframe {
+  display: block;
+  width: min(92vw, 1200px) !important;
+  aspect-ratio: 16 / 9;
+  height: auto !important;
+  border-radius: 14px;
+  box-shadow: 0 18px 70px rgba(0,0,0,0.7);
+  border: none;
+}
+
+#viewer-img {
+  max-width: min(92vw, 1200px);
+  max-height: 82vh;
+  border-radius: 14px;
+  box-shadow: 0 18px 70px rgba(0,0,0,0.7);
+  /* Images load sharp — the viewer is the moment of focus */
+  filter: blur(0px);
+  transition: filter 400ms ease;
+}
+
+/* Image fades in from soft to sharp on load */
+#viewer-img.loading {
+  filter: blur(6px);
+}
+
+#counter {
+  margin-top: 12px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+  text-transform: uppercase;
+  min-height: 1.2em; /* prevent layout shift while loading */
+}
+
+/* =========================================================
+   VIEWER INTRO OVERLAY (once per session per project)
+========================================================= */
+
+#viewer-intro {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  padding: 6vh 6vw;
+  background: rgba(7,7,10,0.96);
+  backdrop-filter: var(--blur-bg);
+  -webkit-backdrop-filter: var(--blur-bg);
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#viewer-intro[hidden] {
+  display: none !important;
+}
+
+.viewer-intro-inner {
+  width: min(760px, 92vw);
+  max-height: 88vh;
+  overflow: auto;
+  padding: 26px 22px;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.14);
+  box-shadow: 0 18px 70px rgba(0,0,0,0.7);
+
+  color: rgba(245,245,245,0.88);
+  font-size: 1.12rem;
+  line-height: 1.85;
+
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+
+  /* Don't let clicks on the card bubble up to the intro overlay */
+  cursor: auto;
+}
+
+.viewer-intro-inner p {
+  margin-bottom: 1.1em;
+}
+
+.viewer-intro-inner p:last-child {
+  margin-bottom: 0;
+}
+
+.viewer-intro-pt {
+  margin-top: 14px;
+  color: rgba(245,245,245,0.74);
+}
+
+.viewer-intro-actions {
+  margin-top: 16px;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.viewer-intro-actions button {
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+
+  color: var(--muted);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.viewer-intro-actions button:hover,
+.viewer-intro-actions button:focus-visible {
+  color: var(--ink);
+}
+
+.viewer-intro-hint {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.70rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--faint);
+  /* Gentle pulse to draw attention without being loud */
+  animation: hint-pulse 3s ease-in-out infinite;
+}
+
+@keyframes hint-pulse {
+  0%, 100% { opacity: 0.45; }
+  50%       { opacity: 0.75; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .viewer-intro-hint {
+    animation: none;
+    opacity: 0.55;
+  }
+}
+
+/* =========================================================
+   ABOUT / CONTACT (VERTICAL PAGE)
+========================================================= */
+
+#about,
+#contact {
+  max-width: 760px;
+  padding: 120px 6vw 0;
+}
+
+#about {
+  font-size: 1.2rem;
+  line-height: 1.85;
+  color: rgba(245,245,245,0.88);
+}
+
+.about-lang {
+  margin-bottom: 64px;
+}
+
+#about p {
+  margin-bottom: 1.4em;
+}
+
+.about-secondary {
+  color: rgba(245,245,245,0.78);
+  font-size: 1.05em;
+}
+
+#contact {
+  line-height: 1.6;
+  color: var(--muted);
+  padding-bottom: 80px;
+}
+
+#contact a {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255,255,255,0.25);
+}
+
+#contact a:hover,
+#contact a:focus-visible {
+  border-bottom-color: rgba(255,255,255,0.6);
+}
+
+/* =========================================================
+   PT REVEAL BUTTON (About + Viewer)
+========================================================= */
+
+#pt-reveal,
+.viewer-intro-pt-toggle {
+  margin-top: 22px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+
+  color: rgba(245,245,245,0.65);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+#pt-reveal:hover,
+#pt-reveal:focus-visible,
+.viewer-intro-pt-toggle:hover,
+.viewer-intro-pt-toggle:focus-visible {
+  color: rgba(245,245,245,0.88);
+}
