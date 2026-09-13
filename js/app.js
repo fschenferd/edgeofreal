@@ -399,7 +399,7 @@ const projects = {
       // Preload next image silently
       if (currentIndex < total) {
         const pre = new Image();
-        pre.src = `images/${activeProject}/${pad2(currentIndex + 1)}.jpg`;
+        pre.src = `images/${activeProject}/${pad2(currentIndex + 1)}.jpeg`;
       }
     };
 
