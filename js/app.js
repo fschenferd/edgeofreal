@@ -46,13 +46,14 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentIndex = 1;
   let lastFocusedCard = null; // for returning focus on viewer close
 
-  const projects = {
-    "on-seeing":  12,
-    "in-passing": 12,
-    "meanwhile":  12,
-    "in-transit": 1,
+const projects = {
+    "on-seeing":   14,
+    "in-passing":  15,
+    "meanwhile":   12,
+    "on-thin-air": 14,  // Added with your count
+    "in-transit":  1,
   };
-
+  
   const vimeoIds = {
     "in-transit": ["1164968539"],
   };
@@ -70,6 +71,10 @@ document.addEventListener("DOMContentLoaded", () => {
       en: `<p>Made across intervals of distraction and pause, this series gathers scenes that exist beside declared events. Nothing announces itself as central. Light shifts, bodies lean, structures hold. The images operate in the space between occurrences, where duration stretches and narrative loosens. It is most probably not about climax, as perspective allows you to shuffle importance. I guess it's about the quiet continuity of the ordinary.</p>`,
       pt: `<p>Feita nos intervalos entre distração e pausa, esta série reúne cenas que existem um pouco à margem do que se reconhece como acontecimento. Nada se percebe como central. A luz se desloca, corpos se inclinam, estruturas sustentam. As imagens operam no espaço entre ocorrências, onde a duração se alonga e a narrativa se afrouxa. Muito provavelmente não se trata de clímax, já que a perspectiva permite embaralhar a importância das coisas. Talvez seja apenas a continuidade silenciosa do ordinário.</p>`,
     },
+"on-thin-air": {
+      en: `<p>Captured from the suspension of flight, where the ground recedes into abstraction and gravity feels like a suggestion rather than a law. In this thin air, forms lose their weight and time stretches into a continuous present. The window isolates clouds that behave like geology and landscapes that flatten into pure texture, stripped of scale and utility. There is no arrival here, only the prolonged duration of being held aloft. It is a view from the interval, aloof from the busy arrangements below, where the world continues unaware of the silence above. Here, seeing is a form of drifting.</p>`,
+      pt: `<p>Capturadas da suspensão do voo, onde o chão recua para a abstração e a gravidade parece mais sugestão que lei. Neste ar rarefeito, as formas perdem o peso e o tempo se estica num presente contínuo. A janela isola nuvens que se comportam como geologia e paisagens que se achatam em pura textura, despojadas de escala e utilidade. Não há chegada aqui, apenas a duração prolongada de estar suspensa. É um olhar do intervalo, alheio aos arranjos lá embaixo, onde o mundo segue sem notar o silêncio acima. Aqui, ver é uma forma de derivar.</p>`,
+    },    
     "in-transit": {
       en: `<p>The attempt with these moving images is that it doesn't necessarily depart or arrive. They remain in passage: sometimes through the motion of the camera, other times through a voice, a current of air, a subtle shift in the frame… What moves is not always visible; it may be breath, light, a pulse beneath the surface of things.</p><p>The work inhabits a middle state. It does not advance toward resolution, nor does it settle. It continues. In this continuity, attention drifts and gathers, and movement becomes less an event than a condition of being.</p>`,
       pt: `<p>A tentativa com estas imagens em movimento é que não partam, necessariamente, e nem cheguem. Elas permanecem em passagem: às vezes pelo movimento da câmera, às vezes por uma voz, uma corrente de ar, um deslocamento sutil no enquadramento… O que se move nem sempre é visível; pode ser respiração, luz, um pulsar sob a superfície das coisas.</p><p>O trabalho habita um estado intermediário. Ele não avança em direção à resolução, e nem se acomoda. Ele continua. Nessa continuidade, a atenção deriva e se recompõe, e o movimento deixa de ser acontecimento para tornar-se condição de ser.</p>`,
