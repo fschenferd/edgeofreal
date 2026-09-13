@@ -387,7 +387,7 @@ const projects = {
     viewerImg.hidden = false;
 
     const total    = projects[activeProject] ?? 0;
-    const file     = `${pad2(currentIndex)}.jpg`;
+    const file     = `${pad2(currentIndex)}.jpeg`;
     const src      = `images/${activeProject}/${file}`;
 
     // Soft-focus loading state: blurry → sharp as image loads
